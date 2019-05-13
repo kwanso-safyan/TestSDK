@@ -18,7 +18,6 @@
 		B80D3C382282E618008A876A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80D3C372282E618008A876A /* AppDelegate.swift */; };
 		B80D3C3A2282E6F5008A876A /* SSOController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80D3C392282E6F5008A876A /* SSOController.swift */; };
 		B80D3C3C2282E714008A876A /* ConstantsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80D3C3B2282E714008A876A /* ConstantsAPI.swift */; };
-		B80D3C442283FE13008A876A /* SSOButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80D3C432283FE13008A876A /* SSOButton.swift */; };
 		B80D3C4622840DBC008A876A /* SSOView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80D3C4522840DBC008A876A /* SSOView.swift */; };
 		B80D3C4A22840DE3008A876A /* SSOView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80D3C4822840DE3008A876A /* SSOView.xib */; };
 		EF10DD66EC558F6734D0B691 /* Pods_TestSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B6D206D461209A28481FC39 /* Pods_TestSDK.framework */; };
@@ -43,7 +42,6 @@
 		B80D3C372282E618008A876A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B80D3C392282E6F5008A876A /* SSOController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SSOController.swift; sourceTree = "<group>"; };
 		B80D3C3B2282E714008A876A /* ConstantsAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantsAPI.swift; sourceTree = "<group>"; };
-		B80D3C432283FE13008A876A /* SSOButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSOButton.swift; sourceTree = "<group>"; };
 		B80D3C4522840DBC008A876A /* SSOView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSOView.swift; sourceTree = "<group>"; };
 		B80D3C4822840DE3008A876A /* SSOView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SSOView.xib; sourceTree = "<group>"; };
 		B80D3CDF22855F10008A876A /* CommonCryptoModule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CommonCryptoModule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,7 +111,6 @@
 				B80D3C392282E6F5008A876A /* SSOController.swift */,
 				B80D3BAF2282C82A008A876A /* LoginViewController.swift */,
 				B80D3BB02282C82A008A876A /* LoginViewController.xib */,
-				B80D3C432283FE13008A876A /* SSOButton.swift */,
 				B80D3BBB2282D390008A876A /* Assets.xcassets */,
 				B80D3B922282A987008A876A /* Info.plist */,
 			);
@@ -256,7 +253,6 @@
 				B80D3BBA2282D1D8008A876A /* UIColor+Colors.swift in Sources */,
 				B80D3C4622840DBC008A876A /* SSOView.swift in Sources */,
 				B80D3BB12282C82A008A876A /* LoginViewController.swift in Sources */,
-				B80D3C442283FE13008A876A /* SSOButton.swift in Sources */,
 				B80D3BB42282C99E008A876A /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,8 +8,10 @@ target 'TestSDK' do
   # Pods for TestSDK
 
   pod 'Alamofire'
-  
-  s.dependency "Alamofire"
-      
+  pod 'CommonCryptoModule'
+  pod 'SwiftyJSON'
+  pod 'ReachabilitySwift'
+  pod 'MBProgressHUD'
+  pod 'IQKeyboardManagerSwift'
 
 end

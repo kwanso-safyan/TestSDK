@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 //import MBProgressHUD
-//import CommonCryptoModule
+import CommonCryptoModule
 
 public class SSOController: UIViewController, SFSafariViewControllerDelegate {
 
@@ -73,10 +73,10 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         
         //:- authentication url path e.g (client_url + client_id + remaining url path + encrypted code_verifier + code_challenge_method)
         
-//        let urlPath = "\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(self.getEncryptedVerifierCode(IOS_CODE_VERIFIER))\(WEB_AUTH_BASE_URL_THIRD)"
+        let urlPath = "\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(self.getEncryptedVerifierCode(IOS_CODE_VERIFIER))\(WEB_AUTH_BASE_URL_THIRD)"
         
-        let code_verifier = "k2oYXKqiZrucvpgengXLeM1zKwsygOuURBK7b4-PB68"
-        let urlPath = "\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(code_verifier)\(WEB_AUTH_BASE_URL_THIRD)"
+        //let code_verifier = "k2oYXKqiZrucvpgengXLeM1zKwsygOuURBK7b4-PB68"
+        //let urlPath = "\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(code_verifier)\(WEB_AUTH_BASE_URL_THIRD)"
         
         
         print(urlPath)
@@ -164,7 +164,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         }
     }
     
- 
+ */
     // MARK: - SHA Encryption
     
     func getEncryptedVerifierCode(_ verifier: String) -> String {
@@ -183,7 +183,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         
         return encryptedVerifier
     }
- */
+ 
     // MARK: - Safari Delegates
     
     private func safariViewController(_ controller: SFSafariViewController, didCompleteInitialLoad didLoadSuccessfully: Bool) {

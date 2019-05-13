@@ -23,7 +23,7 @@ public class SSOView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        //commonInit()
+        commonInit()
     }
     
     public func setViewController(viewController: UIViewController) {
