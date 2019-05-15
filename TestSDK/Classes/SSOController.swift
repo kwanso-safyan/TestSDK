@@ -137,6 +137,8 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     
     public func callSSOTokenApiWithCodeCompletion(code: String, target: UIViewController, completion: @escaping (Bool?) -> Void) {
         
+        self.mtarget = target
+        
         if code.count > 0 {
             completion(true)
         }else{
