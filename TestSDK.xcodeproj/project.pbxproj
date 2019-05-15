@@ -20,6 +20,12 @@
 		B80D3C3C2282E714008A876A /* ConstantsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80D3C3B2282E714008A876A /* ConstantsAPI.swift */; };
 		B80D3C4622840DBC008A876A /* SSOView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80D3C4522840DBC008A876A /* SSOView.swift */; };
 		B80D3C4A22840DE3008A876A /* SSOView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80D3C4822840DE3008A876A /* SSOView.xib */; };
+		B828F4CA22897A290068AE24 /* BushnellAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B828F4C922897A290068AE24 /* BushnellAPI.swift */; };
+		B828F4CD22897A4E0068AE24 /* TokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B828F4CC22897A4E0068AE24 /* TokenModel.swift */; };
+		B828F4CF22897A590068AE24 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B828F4CE22897A590068AE24 /* CurrentUser.swift */; };
+		B828F4D122897A600068AE24 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B828F4D022897A600068AE24 /* User.swift */; };
+		B828F4D322897A6A0068AE24 /* Token+Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B828F4D222897A6A0068AE24 /* Token+Serializable.swift */; };
+		B828F4D522897A6F0068AE24 /* User+Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B828F4D422897A6E0068AE24 /* User+Serializable.swift */; };
 		EF10DD66EC558F6734D0B691 /* Pods_TestSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B6D206D461209A28481FC39 /* Pods_TestSDK.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +51,12 @@
 		B80D3C4522840DBC008A876A /* SSOView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSOView.swift; sourceTree = "<group>"; };
 		B80D3C4822840DE3008A876A /* SSOView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SSOView.xib; sourceTree = "<group>"; };
 		B80D3CDF22855F10008A876A /* CommonCryptoModule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CommonCryptoModule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B828F4C922897A290068AE24 /* BushnellAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BushnellAPI.swift; sourceTree = "<group>"; };
+		B828F4CC22897A4E0068AE24 /* TokenModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenModel.swift; sourceTree = "<group>"; };
+		B828F4CE22897A590068AE24 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
+		B828F4D022897A600068AE24 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B828F4D222897A6A0068AE24 /* Token+Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Token+Serializable.swift"; sourceTree = "<group>"; };
+		B828F4D422897A6E0068AE24 /* User+Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Serializable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,18 +111,13 @@
 		B80D3B902282A987008A876A /* TestSDK */ = {
 			isa = PBXGroup;
 			children = (
+				B828F4DA228995650068AE24 /* Extension */,
+				B828F4CB22897A440068AE24 /* Models */,
+				B828F4C8228971930068AE24 /* Classes */,
 				B80D3B912282A987008A876A /* TestSDK.h */,
-				B80D3BB32282C989008A876A /* Constants.swift */,
-				B80D3C3B2282E714008A876A /* ConstantsAPI.swift */,
-				B80D3BB72282D19D008A876A /* UIViewController+Extension.swift */,
-				B80D3BB92282D1D8008A876A /* UIColor+Colors.swift */,
-				B80D3BB52282C9C7008A876A /* MBProgressHUD+Helper.swift */,
 				B80D3C372282E618008A876A /* AppDelegate.swift */,
 				B80D3C4522840DBC008A876A /* SSOView.swift */,
 				B80D3C4822840DE3008A876A /* SSOView.xib */,
-				B80D3C392282E6F5008A876A /* SSOController.swift */,
-				B80D3BAF2282C82A008A876A /* LoginViewController.swift */,
-				B80D3BB02282C82A008A876A /* LoginViewController.xib */,
 				B80D3BBB2282D390008A876A /* Assets.xcassets */,
 				B80D3B922282A987008A876A /* Info.plist */,
 			);
@@ -124,6 +131,41 @@
 				B80D3B9E2282A987008A876A /* Info.plist */,
 			);
 			path = TestSDKTests;
+			sourceTree = "<group>";
+		};
+		B828F4C8228971930068AE24 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B80D3BB32282C989008A876A /* Constants.swift */,
+				B80D3C3B2282E714008A876A /* ConstantsAPI.swift */,
+				B828F4C922897A290068AE24 /* BushnellAPI.swift */,
+				B80D3C392282E6F5008A876A /* SSOController.swift */,
+				B80D3BAF2282C82A008A876A /* LoginViewController.swift */,
+				B80D3BB02282C82A008A876A /* LoginViewController.xib */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		B828F4CB22897A440068AE24 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B828F4D222897A6A0068AE24 /* Token+Serializable.swift */,
+				B828F4CC22897A4E0068AE24 /* TokenModel.swift */,
+				B828F4CE22897A590068AE24 /* CurrentUser.swift */,
+				B828F4D422897A6E0068AE24 /* User+Serializable.swift */,
+				B828F4D022897A600068AE24 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B828F4DA228995650068AE24 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				B80D3BB72282D19D008A876A /* UIViewController+Extension.swift */,
+				B80D3BB92282D1D8008A876A /* UIColor+Colors.swift */,
+				B80D3BB52282C9C7008A876A /* MBProgressHUD+Helper.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,14 +287,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B828F4D122897A600068AE24 /* User.swift in Sources */,
 				B80D3C382282E618008A876A /* AppDelegate.swift in Sources */,
+				B828F4CD22897A4E0068AE24 /* TokenModel.swift in Sources */,
+				B828F4D522897A6F0068AE24 /* User+Serializable.swift in Sources */,
 				B80D3C3A2282E6F5008A876A /* SSOController.swift in Sources */,
 				B80D3BB82282D19D008A876A /* UIViewController+Extension.swift in Sources */,
+				B828F4CA22897A290068AE24 /* BushnellAPI.swift in Sources */,
+				B828F4D322897A6A0068AE24 /* Token+Serializable.swift in Sources */,
 				B80D3BB62282C9C7008A876A /* MBProgressHUD+Helper.swift in Sources */,
 				B80D3C3C2282E714008A876A /* ConstantsAPI.swift in Sources */,
 				B80D3BBA2282D1D8008A876A /* UIColor+Colors.swift in Sources */,
 				B80D3C4622840DBC008A876A /* SSOView.swift in Sources */,
 				B80D3BB12282C82A008A876A /* LoginViewController.swift in Sources */,
+				B828F4CF22897A590068AE24 /* CurrentUser.swift in Sources */,
 				B80D3BB42282C99E008A876A /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,6 +434,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2EDE5AEEF8464305D1CB6DA3 /* Pods-TestSDK.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -413,6 +462,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 01A248C12B2B974853F4BECF /* Pods-TestSDK.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;

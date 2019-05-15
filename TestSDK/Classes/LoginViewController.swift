@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
 
 public class LoginViewController: UIViewController {
 
@@ -38,14 +39,14 @@ public class LoginViewController: UIViewController {
          //:- Register to handle the deep link notification.
          **********/
         
-        NOTIFICATION_CENTER.addObserver(self, selector: #selector(callTokenApi), name: NSNotification.Name(rawValue: SUCCESS_DEEPLINK_CODE), object: nil)
-        NOTIFICATION_CENTER.addObserver(self, selector: #selector(failWebResp), name: NSNotification.Name(rawValue: FAIL_DEEPLINK_CODE), object: nil)
-        NOTIFICATION_CENTER.addObserver(self, selector: #selector(reloadSafariTab), name: NSNotification.Name(rawValue: NO_DEEPLINK_CODE), object: nil)
+//        NOTIFICATION_CENTER.addObserver(self, selector: #selector(callTokenApi), name: NSNotification.Name(rawValue: SUCCESS_DEEPLINK_CODE), object: nil)
+//        NOTIFICATION_CENTER.addObserver(self, selector: #selector(failWebResp), name: NSNotification.Name(rawValue: FAIL_DEEPLINK_CODE), object: nil)
+//        NOTIFICATION_CENTER.addObserver(self, selector: #selector(reloadSafariTab), name: NSNotification.Name(rawValue: NO_DEEPLINK_CODE), object: nil)
         
     }
     
     // MARK: - Notification Handler Method
-    
+    /*
     @objc func failWebResp() {
         
         self.dismiss(animated: true, completion: nil)
@@ -56,6 +57,7 @@ public class LoginViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
         Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(openSafariTab), userInfo: nil, repeats: false)
     }
+    */
     
     @objc public func openSafariTab() {
         
@@ -88,12 +90,12 @@ public class LoginViewController: UIViewController {
     // MARK: - Auth Api Method
     
     //:- Call APi for access_token fetching
-    
-    @objc func callTokenApi() {
     /*
+    @objc func callTokenApi() {
+    
         _ = MBProgressHUD.showHUDAddedGlobal()
         
-        let code = AppDel.deepLinkCode
+        let code = "AppDel.deepLinkCode"
         let code_verifier = IOS_CODE_VERIFIER
         
         //:- Pass the parameter "code" and "code verifier"
@@ -105,15 +107,15 @@ public class LoginViewController: UIViewController {
             }
             else {
                 if response != nil {
-                    UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: response![ERROR_DESCRIPTION] as? String, btnTitle: OK, target: self)
+                    //UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: response![ERROR_DESCRIPTION] as? String, btnTitle: OK, target: self)
                 }
                 
                 MBProgressHUD.dismissGlobalHUD()
             }
         }
-         */
+        
     }
-    /*
+    
     func userInfoApi(accessToken: String) {
         
         //:- Pass the parameter with access_token
@@ -123,11 +125,11 @@ public class LoginViewController: UIViewController {
                 
                 MBProgressHUD.dismissGlobalHUD()
                 
-                AppDel.setRootController(identifierName: DASHBOARD_IDENTIFIER)
+                //AppDel.setRootController(identifierName: DASHBOARD_IDENTIFIER)
             }
             else {
                 if response != nil {
-                    UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: response![ERROR_DESCRIPTION] as? String, btnTitle: OK, target: self)
+                    //UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: response![ERROR_DESCRIPTION] as? String, btnTitle: OK, target: self)
                 }
                 
                 MBProgressHUD.dismissGlobalHUD()
@@ -145,7 +147,7 @@ public class LoginViewController: UIViewController {
          //:- authentication url path e.g (client_url + client_id + remaining url path + encrypted code_verifier + code_challenge_method)
          **********/
         
-        print("username")
+        print("username --------------")
         
         ssoVC.ssoAthuntication(target: self)
         

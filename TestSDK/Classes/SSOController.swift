@@ -8,7 +8,7 @@
 
 import UIKit
 import SafariServices
-//import MBProgressHUD
+import MBProgressHUD
 import CommonCryptoModule
 
 public class SSOController: UIViewController, SFSafariViewControllerDelegate {
@@ -22,9 +22,25 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
 //        fatalError("init(coder:) has not been implemented")
 //    }
     
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//    }
+    var mtarget: UIViewController?
+    
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    public func registerNotification() {
+        
+        /**********
+         //:- Register to handle the deep link notification.
+         **********/
+        
+        print("---- registerNotification ----")
+        
+//        NOTIFICATION_CENTER.addObserver(self, selector: #selector(callTokenApi), name: NSNotification.Name(rawValue: SUCCESS_DEEPLINK_CODE), object: nil)
+//        NOTIFICATION_CENTER.addObserver(self, selector: #selector(failWebResp), name: NSNotification.Name(rawValue: FAIL_DEEPLINK_CODE), object: nil)
+//        NOTIFICATION_CENTER.addObserver(self, selector: #selector(reloadSafariTab), name: NSNotification.Name(rawValue: NO_DEEPLINK_CODE), object: nil)
+    }
+ 
     
     // MARK: - Notification Handler Method
     
@@ -118,30 +134,55 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     // MARK: - Auth Api Method
     
     //:- Call APi for access_token fetching
-    /*
-    @objc func callTokenApi() {
+    
+    public func callSSOTokenApiWithCodeCompletion(code: String, target: UIViewController, completion: @escaping (Bool?) -> Void) {
+        
+        if code.count > 0 {
+            completion(true)
+        }else{
+            completion(false)
+        }
+        
+    }
+    
+    public func callSSOTokenApiWithCode(code: String, target: UIViewController) {
+        
+        print(code)
+        
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        
+        self.mtarget = target
+        
+        //target.dismiss(animated: true, completion: nil)
+        
+        self.callTokenApi(code: code)
+
+        
+    }
+    
+    
+    @objc func callTokenApi(code: String) {
         
         _ = MBProgressHUD.showHUDAddedGlobal()
-        
-        let code = AppDel.deepLinkCode
-        let code_verifier = IOS_CODE_VERIFIER
-        
+
         //:- Pass the parameter "code" and "code verifier"
-        
-        BushnellAPI.sharedInstance.tokenApi(responseCode: code as String, codeVerifier: code_verifier as String) { (success, response) -> Void in
+
+        BushnellAPI.sharedInstance.tokenApi(responseCode: code as String, codeVerifier: IOS_CODE_VERIFIER as String) { (success, response) -> Void in
             if (success) {
-                
+
+                print("--response ------ ",response as Any)
                 self.userInfoApi(accessToken: (CurrentUser.sharedInstance.tokenObject?.access_token)!)
             }
             else {
                 if response != nil {
-                    UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: response![ERROR_DESCRIPTION] as? String, btnTitle: OK, target: self)
+                    //UtilityHelper.showAlertWithM`essageAndTarget(ALERT_TITLE, message: response![ERROR_DESCRIPTION] as? String, btnTitle: OK, target: self)
                 }
-                
+
                 MBProgressHUD.dismissGlobalHUD()
             }
         }
     }
+ 
     
     func userInfoApi(accessToken: String) {
         
@@ -150,13 +191,16 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         BushnellAPI.sharedInstance.userInfoApi(accessToken as String) { (success, response) -> Void in
             if (success) {
                 
+                print("-- userInfoApi ------ ",response as Any)
+                
                 MBProgressHUD.dismissGlobalHUD()
                 
-                AppDel.setRootController(identifierName: DASHBOARD_IDENTIFIER)
+                self.mtarget!.dismiss(animated: true, completion: nil)
+                //AppDel.setRootController(identifierName: DASHBOARD_IDENTIFIER)
             }
             else {
                 if response != nil {
-                    UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: response![ERROR_DESCRIPTION] as? String, btnTitle: OK, target: self)
+                    //UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: response![ERROR_DESCRIPTION] as? String, btnTitle: OK, target: self)
                 }
                 
                 MBProgressHUD.dismissGlobalHUD()
@@ -164,7 +208,8 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         }
     }
     
- */
+    
+ 
     // MARK: - SHA Encryption
     
     func getEncryptedVerifierCode(_ verifier: String) -> String {
@@ -195,7 +240,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
             //CurrentUser.sharedInstance.logOut()
         }
         
-        //AppDel.window?.rootViewController!.dismiss(animated: true, completion: nil)
+        AppDel.window?.rootViewController!.dismiss(animated: true, completion: nil)
     }
     
 }
