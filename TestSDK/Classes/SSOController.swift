@@ -30,12 +30,6 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     
     public func registerNotification() {
         
-        /**********
-         //:- Register to handle the deep link notification.
-         **********/
-        
-        print("---- registerNotification ----")
-        
 //        NOTIFICATION_CENTER.addObserver(self, selector: #selector(callTokenApi), name: NSNotification.Name(rawValue: SUCCESS_DEEPLINK_CODE), object: nil)
 //        NOTIFICATION_CENTER.addObserver(self, selector: #selector(failWebResp), name: NSNotification.Name(rawValue: FAIL_DEEPLINK_CODE), object: nil)
 //        NOTIFICATION_CENTER.addObserver(self, selector: #selector(reloadSafariTab), name: NSNotification.Name(rawValue: NO_DEEPLINK_CODE), object: nil)
@@ -44,14 +38,14 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     
     // MARK: - Notification Handler Method
     
-    @objc func failWebResp() {
+    public func failWebResp() {
         
-        self.dismiss(animated: true, completion: nil)
+        self.mtarget!.dismiss(animated: true, completion: nil)
     }
     
     @objc func reloadSafariTab() {
         
-        self.dismiss(animated: true, completion: nil)
+        self.mtarget!.dismiss(animated: true, completion: nil)
         Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(openSafariTab), userInfo: nil, repeats: false)
     }
     
@@ -140,8 +134,31 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         self.mtarget = target
         
         if code.count > 0 {
-            completion(true)
+            
+            self.callTokenApi(code: code) { status in
+                
+                target.dismiss(animated: true, completion: nil)
+                
+                completion(status)
+                
+                /*
+                 
+                if status {
+                    
+                    self.userInfoApi(accessToken: (CurrentUser.sharedInstance.tokenObject?.access_token)!, completion: { status in
+                        
+                        if status {
+                            
+                        }
+                    })
+ 
+                }
+                 */
+            }
+            
         }else{
+            
+            target.dismiss(animated: true, completion: nil)
             completion(false)
         }
         
@@ -149,21 +166,10 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     
     public func callSSOTokenApiWithCode(code: String, target: UIViewController) {
         
-        print(code)
-        
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        
-        self.mtarget = target
-        
-        //target.dismiss(animated: true, completion: nil)
-        
-        self.callTokenApi(code: code)
-
-        
     }
     
     
-    @objc func callTokenApi(code: String) {
+    func callTokenApi(code: String, completion: @escaping (Bool) -> Void) {
         
         _ = MBProgressHUD.showHUDAddedGlobal()
 
@@ -173,7 +179,11 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
             if (success) {
 
                 print("--response ------ ",response as Any)
-                self.userInfoApi(accessToken: (CurrentUser.sharedInstance.tokenObject?.access_token)!)
+                
+                self.userInfoApi(accessToken: (CurrentUser.sharedInstance.tokenObject?.access_token)!, completion: { status in
+                    completion(status)
+                })
+                
             }
             else {
                 if response != nil {
@@ -181,24 +191,24 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
                 }
 
                 MBProgressHUD.dismissGlobalHUD()
+                completion(false)
             }
         }
     }
  
     
-    func userInfoApi(accessToken: String) {
+    func userInfoApi(accessToken: String, completion: @escaping (Bool) -> Void) {
         
         //:- Pass the parameter with access_token
         
         BushnellAPI.sharedInstance.userInfoApi(accessToken as String) { (success, response) -> Void in
             if (success) {
                 
-                print("-- userInfoApi ------ ",response as Any)
+                print(response as Any)
                 
                 MBProgressHUD.dismissGlobalHUD()
                 
-                self.mtarget!.dismiss(animated: true, completion: nil)
-                //AppDel.setRootController(identifierName: DASHBOARD_IDENTIFIER)
+                completion(true)
             }
             else {
                 if response != nil {
@@ -206,6 +216,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
                 }
                 
                 MBProgressHUD.dismissGlobalHUD()
+                completion(false)
             }
         }
     }
@@ -235,14 +246,14 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     
     private func safariViewController(_ controller: SFSafariViewController, didCompleteInitialLoad didLoadSuccessfully: Bool) {
         
-        print("safariiii")
+        print("safari logout")
         
         //:- Delete sesison info
         if didLoadSuccessfully {
             //CurrentUser.sharedInstance.logOut()
         }
         
-        AppDel.window?.rootViewController!.dismiss(animated: true, completion: nil)
+        self.mtarget!.dismiss(animated: true, completion: nil)
     }
     
 }

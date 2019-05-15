@@ -28,4 +28,12 @@ extension UIViewController {
         yourView.layer.borderColor = borderColor.cgColor
         yourView.layer.borderWidth = borderWidth
     }
+    
+    func showAlertWithMessageAndTarget(_ title: String?, message: String?, btnTitle: String?, target: UIViewController) {
+        
+        let alertController = UIAlertController(title: title!, message: message!, preferredStyle: .alert)
+        let accept = UIAlertAction(title: btnTitle, style: .default, handler: nil)
+        alertController.addAction(accept)
+        target.present(alertController, animated: true, completion:nil)
+    }
 }
