@@ -11,7 +11,7 @@ import UIKit
 
 private enum Keys: String {
     case Profile = "profile"
-    case isLogin = "isUserLogin"
+    case isLogin = "isSSOUserLogin"
     case TokenApiData = "tokenApiData"
 }
 
@@ -77,7 +77,7 @@ class CurrentUser {
     
     func logOut() {
         
-        //wipe()
+        wipe()
         //AppDel.setRootController(identifierName: LOGIN_IDENTIFIER)
     }
     
@@ -102,18 +102,37 @@ class CurrentUser {
         
         if let dictionary = defaults.object(forKey: Keys.TokenApiData.rawValue) as? [String: AnyObject] {
             self.tokenObject = (TokenModel.deserialize(dictionary: dictionary)! as TokenModel)
-            self.checkSessionExpiry()
+            /*
+            self.checkSessionExpiry("") {isExpire in
+                print("----- ",isExpire)
+            }
+            */
         }
     }
     
-    func checkSessionExpiry() {
+    public func checkSessionExpiry(_ code: String, completion: @escaping (Bool) -> Void) {
         
         let currentDate = Date()
         let expiryDate = USER_DEFAULTS.value(forKey: SESSION_EXPIRY_DATE) as! Date
         
         if currentDate > expiryDate {
-            self.logOut()
-            //UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: SESSION_EXPIRE_MSG, btnTitle: OK, target: (AppDel.window?.rootViewController)!)
+            
+            if (self.tokenObject?.refresh_token.count)! > 0 {
+                //:- Call refresh token API
+                BushnellAPI.sharedInstance.refreshTokenApi(refreshToken: (self.tokenObject?.refresh_token)!) { (success, response) -> Void in
+                    if (success) {
+                        completion(false)
+                    }
+                }
+                
+            } else {
+                //self.logOut()
+                //UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: SESSION_EXPIRE_MSG, btnTitle: OK, target: (AppDel.window?.rootViewController)!)
+                
+                completion(true)
+            }
+        } else {
+            completion(false)
         }
     }
     

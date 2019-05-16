@@ -81,6 +81,8 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
  
     public func ssoAthuntication(target: UIViewController) {
         
+        self.mtarget = target
+        
         //:- authentication url path e.g (client_url + client_id + remaining url path + encrypted code_verifier + code_challenge_method)
         
         let urlPath = "\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(self.getEncryptedVerifierCode(IOS_CODE_VERIFIER))\(WEB_AUTH_BASE_URL_THIRD)"
@@ -101,17 +103,22 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     
-    public func logoutSSOAuthentication(viewController: UIViewController) {
+    public func logoutSSOAuthentication(target: UIViewController) {
+        
+        self.mtarget = target
         
         //:- Logout url path e.g (client_url + session/end)
         
-        guard let url = URL(string: WEB_AUTH_ENG_SESSION_URL) else { return }
+        let urlPath = "\(SSO_BASE_URL)\("session/end?")\("post_logout_redirect_uri=")\(IOS_REDIRECT_URL)\("logout=true")\("&id_token_hint=")\((CurrentUser.sharedInstance.tokenObject?.id_token)!)"
+        
+        print(urlPath)
+        guard let url = URL(string: urlPath) else { return }
         
         let safariVC = SFSafariViewController(url: url)
         safariVC.dismissButtonStyle = .cancel
         safariVC.modalPresentationStyle = .overFullScreen
         safariVC.delegate = self as SFSafariViewControllerDelegate
-        viewController.present(safariVC, animated: true, completion: nil)
+        target.present(safariVC, animated: true, completion: nil)
     }
     
     public func updateSSOProfile(viewController: UIViewController) {
@@ -124,6 +131,28 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         //rootViewController.navigationController?.pushViewController(vc, animated: true)
     }
     
+    public func validateSsoLoginStatus(_ code: String, completion: @escaping (Bool) -> Void) {
+        
+        CurrentUser.sharedInstance.load()
+
+        if CurrentUser.sharedInstance.isLoggedIn! {
+            /**********
+             //:- Load access token info from the local storage.
+             **********/
+            CurrentUser.sharedInstance.loadTokenInfo()
+            
+            completion(true)
+        } else {
+            completion(false)
+        }
+    }
+    
+    public func checkSessionExpiryStatus() {
+        CurrentUser.sharedInstance.checkSessionExpiry("") {isExpire in
+            print("---- --- ",isExpire)
+        }
+    }
+    
     
     // MARK: - Auth Api Method
     
@@ -131,40 +160,21 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     
     public func callSSOTokenApiWithCodeCompletion(code: String, target: UIViewController, completion: @escaping (Bool?) -> Void) {
         
-        self.mtarget = target
+        //self.mtarget = target
         
         if code.count > 0 {
             
             self.callTokenApi(code: code) { status in
                 
                 target.dismiss(animated: true, completion: nil)
-                
                 completion(status)
-                
-                /*
-                 
-                if status {
-                    
-                    self.userInfoApi(accessToken: (CurrentUser.sharedInstance.tokenObject?.access_token)!, completion: { status in
-                        
-                        if status {
-                            
-                        }
-                    })
- 
-                }
-                 */
             }
             
         }else{
             
-            target.dismiss(animated: true, completion: nil)
+            self.mtarget!.dismiss(animated: true, completion: nil)
             completion(false)
         }
-        
-    }
-    
-    public func callSSOTokenApiWithCode(code: String, target: UIViewController) {
         
     }
     
@@ -178,7 +188,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         BushnellAPI.sharedInstance.tokenApi(responseCode: code as String, codeVerifier: IOS_CODE_VERIFIER as String) { (success, response) -> Void in
             if (success) {
 
-                print("--response ------ ",response as Any)
+                print(response as Any)
                 
                 self.userInfoApi(accessToken: (CurrentUser.sharedInstance.tokenObject?.access_token)!, completion: { status in
                     completion(status)
@@ -202,12 +212,10 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         //:- Pass the parameter with access_token
         
         BushnellAPI.sharedInstance.userInfoApi(accessToken as String) { (success, response) -> Void in
+            MBProgressHUD.dismissGlobalHUD()
+            print(response as Any)
+            
             if (success) {
-                
-                print(response as Any)
-                
-                MBProgressHUD.dismissGlobalHUD()
-                
                 completion(true)
             }
             else {
@@ -215,7 +223,6 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
                     //UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: response![ERROR_DESCRIPTION] as? String, btnTitle: OK, target: self)
                 }
                 
-                MBProgressHUD.dismissGlobalHUD()
                 completion(false)
             }
         }

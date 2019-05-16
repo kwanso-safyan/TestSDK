@@ -92,6 +92,70 @@ class BushnellAPI {
                 if (result != nil) {
                     
                     let obj = TokenModel(object: result as AnyObject)
+                    //let sessionExpTime = Date().addingTimeInterval(Double(obj.expires_in))
+                    let sessionExpTime = Date().addingTimeInterval(20)
+                    USER_DEFAULTS.set(sessionExpTime, forKey: SESSION_EXPIRY_DATE)
+                    
+                    CurrentUser.sharedInstance.tokenObjectDeserialization(result!)
+                    
+                    handler(true, result as AnyObject)
+                }
+                else{
+                    handler(false, result as AnyObject)
+                }
+            }
+            else
+            {
+                handler(false, nil)
+            }
+        }
+    }
+    
+    func refreshTokenApi(
+        refreshToken:String,
+        handler: @escaping (_ success: Bool, _ response: AnyObject?) -> Void
+        )
+    {
+        let requestString: NSString = "\(SSO_BASE_URL)\(TOKEN_API_PATH)" as NSString
+        
+        let url: NSURL = NSURL(string: requestString as String)!
+        
+        var request = URLRequest(url: url as URL)
+        request.httpMethod = "POST"
+        request.setValue(Strings.CONTENT_TYPE_URL_ENCODED, forHTTPHeaderField: Strings.CONTENT_TYPE)
+        request.setValue(self.authorizationCustomHeader(), forHTTPHeaderField: Strings.AUTHORIZATION)
+        
+        
+        let data : Data = "refresh_token=\(refreshToken)&grant_type=refresh_token".data(using: .utf8)!
+        
+        request.httpBody = data
+        
+        self.alamoFireManager!.request(request).responseJSON { response in
+            
+            
+            switch response.result {
+            case .failure(let error):
+                print(error)
+                
+                if let data = response.data, let responseString = String(data: data, encoding: String.Encoding.utf8) {
+                    print(responseString)
+                }
+            case .success(let responseObject):
+                print(responseObject)
+            }
+            
+            print("Request: \(response.request!)")
+            
+            let success = response.result.isSuccess && (response.response?.statusCode == 200)
+            print(success ? "SUCCESS" : "FAILURE")
+            
+            let result = response.result.value as? [String : AnyObject]
+            
+            if (success)
+            {
+                if (result != nil) {
+                    
+                    let obj = TokenModel(object: result as AnyObject)
                     let sessionExpTime = Date().addingTimeInterval(Double(obj.expires_in))
                     USER_DEFAULTS.set(sessionExpTime, forKey: SESSION_EXPIRY_DATE)
                     
