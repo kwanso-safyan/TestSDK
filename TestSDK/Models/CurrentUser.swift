@@ -63,7 +63,7 @@ class CurrentUser {
         }
     }
     
-    fileprivate func wipe() {
+    fileprivate func wipeSSO() {
         
         self.isLoggedIn = false
         self.user = nil
@@ -72,13 +72,14 @@ class CurrentUser {
         defaults.removeObject(forKey: Keys.Profile.rawValue)
         defaults.removeObject(forKey: Keys.TokenApiData.rawValue)
         
+        defaults.removeObject(forKey: SESSION_EXPIRY_DATE)
+        
         defaults.synchronize()
     }
     
     func logOut() {
         
-        wipe()
-        //AppDel.setRootController(identifierName: LOGIN_IDENTIFIER)
+        wipeSSO()
     }
     
     // MARK: - Token Resp Handler's

@@ -117,7 +117,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         let safariVC = SFSafariViewController(url: url)
         safariVC.dismissButtonStyle = .cancel
         safariVC.modalPresentationStyle = .overFullScreen
-        safariVC.delegate = self as SFSafariViewControllerDelegate
+        safariVC.delegate = target as? SFSafariViewControllerDelegate
         target.present(safariVC, animated: true, completion: nil)
     }
     
@@ -148,8 +148,11 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     public func checkSessionExpiryStatus() {
-        CurrentUser.sharedInstance.checkSessionExpiry("") {isExpire in
-            print("---- --- ",isExpire)
+        
+        if CurrentUser.sharedInstance.isLoggedIn! {
+            CurrentUser.sharedInstance.checkSessionExpiry("") {isExpire in
+                print("---- --- ",isExpire)
+            }
         }
     }
     
@@ -159,8 +162,6 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     //:- Call APi for access_token fetching
     
     public func callSSOTokenApiWithCodeCompletion(code: String, target: UIViewController, completion: @escaping (Bool?) -> Void) {
-        
-        //self.mtarget = target
         
         if code.count > 0 {
             
@@ -172,7 +173,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
             
         }else{
             
-            self.mtarget!.dismiss(animated: true, completion: nil)
+            target.dismiss(animated: true, completion: nil)
             completion(false)
         }
         
@@ -248,6 +249,11 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         
         return encryptedVerifier
     }
+    
+    public func clearSSOSession() {
+        
+        CurrentUser.sharedInstance.logOut()
+    }
  
     // MARK: - Safari Delegates
     
@@ -257,7 +263,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         
         //:- Delete sesison info
         if didLoadSuccessfully {
-            //CurrentUser.sharedInstance.logOut()
+            CurrentUser.sharedInstance.logOut()
         }
         
         self.mtarget!.dismiss(animated: true, completion: nil)
