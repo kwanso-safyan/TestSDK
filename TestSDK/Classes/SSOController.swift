@@ -152,6 +152,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         if CurrentUser.sharedInstance.isLoggedIn! {
             CurrentUser.sharedInstance.checkSessionExpiry("") {isExpire in
                 print("---- --- ",isExpire)
+                //UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: SESSION_EXPIRE_MSG, btnTitle: OK, target: (AppDel.window?.rootViewController)!)
             }
         }
     }

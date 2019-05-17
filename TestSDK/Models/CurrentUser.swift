@@ -123,13 +123,15 @@ class CurrentUser {
                 BushnellAPI.sharedInstance.refreshTokenApi(refreshToken: (self.tokenObject?.refresh_token)!) { (success, response) -> Void in
                     if (success) {
                         completion(false)
+                    }else {
+                        
+                        self.logOut()
+                        completion(true)
                     }
                 }
                 
             } else {
-                //self.logOut()
-                //UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: SESSION_EXPIRE_MSG, btnTitle: OK, target: (AppDel.window?.rootViewController)!)
-                
+                self.logOut()
                 completion(true)
             }
         } else {
