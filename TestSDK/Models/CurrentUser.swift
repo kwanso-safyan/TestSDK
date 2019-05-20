@@ -24,6 +24,7 @@ class CurrentUser {
     var userId: Int?
     var user: User?
     var tokenObject: TokenModel?
+    var configSSO: Configuration?
     
     
     // MARK: - User Resp Handler's
@@ -111,7 +112,8 @@ class CurrentUser {
         }
     }
     
-    public func checkSessionExpiry(_ code: String, completion: @escaping (Bool) -> Void) {
+    
+    public func checkSessionExpiry(_ completion: @escaping (Bool) -> Void) {
         
         let currentDate = Date()
         let expiryDate = USER_DEFAULTS.value(forKey: SESSION_EXPIRY_DATE) as! Date
@@ -137,6 +139,12 @@ class CurrentUser {
         } else {
             completion(false)
         }
+    }
+    
+    
+    func loadSsoConfigurations(_ ssoBaseUrl: String, _ iOSClientId: String, _ iOSClientSecret: String, _ bushnellBaseUrl: String) {
+        
+        self.configSSO = Configuration(ssoBaseUrl: ssoBaseUrl, iOSClientId: iOSClientId, iOSClientSecret: iOSClientSecret, bushnellBaseUrl: bushnellBaseUrl)
     }
     
 }

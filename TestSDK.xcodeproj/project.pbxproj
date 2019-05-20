@@ -26,6 +26,7 @@
 		B828F4D122897A600068AE24 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B828F4D022897A600068AE24 /* User.swift */; };
 		B828F4D322897A6A0068AE24 /* Token+Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B828F4D222897A6A0068AE24 /* Token+Serializable.swift */; };
 		B828F4D522897A6F0068AE24 /* User+Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B828F4D422897A6E0068AE24 /* User+Serializable.swift */; };
+		B86B112E2292ABC100E35350 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86B112D2292ABC100E35350 /* Configuration.swift */; };
 		EF10DD66EC558F6734D0B691 /* Pods_TestSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B6D206D461209A28481FC39 /* Pods_TestSDK.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		B828F4D022897A600068AE24 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B828F4D222897A6A0068AE24 /* Token+Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Token+Serializable.swift"; sourceTree = "<group>"; };
 		B828F4D422897A6E0068AE24 /* User+Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+Serializable.swift"; sourceTree = "<group>"; };
+		B86B112D2292ABC100E35350 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,9 +151,10 @@
 		B828F4CB22897A440068AE24 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B86B112D2292ABC100E35350 /* Configuration.swift */,
+				B828F4CE22897A590068AE24 /* CurrentUser.swift */,
 				B828F4D222897A6A0068AE24 /* Token+Serializable.swift */,
 				B828F4CC22897A4E0068AE24 /* TokenModel.swift */,
-				B828F4CE22897A590068AE24 /* CurrentUser.swift */,
 				B828F4D422897A6E0068AE24 /* User+Serializable.swift */,
 				B828F4D022897A600068AE24 /* User.swift */,
 			);
@@ -293,6 +296,7 @@
 				B828F4D522897A6F0068AE24 /* User+Serializable.swift in Sources */,
 				B80D3C3A2282E6F5008A876A /* SSOController.swift in Sources */,
 				B80D3BB82282D19D008A876A /* UIViewController+Extension.swift in Sources */,
+				B86B112E2292ABC100E35350 /* Configuration.swift in Sources */,
 				B828F4CA22897A290068AE24 /* BushnellAPI.swift in Sources */,
 				B828F4D322897A6A0068AE24 /* Token+Serializable.swift in Sources */,
 				B80D3BB62282C9C7008A876A /* MBProgressHUD+Helper.swift in Sources */,

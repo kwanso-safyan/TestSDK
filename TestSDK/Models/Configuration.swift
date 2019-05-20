@@ -8,19 +8,21 @@
 import Foundation
 
 class Configuration: NSObject {
-    var ssoBaseUrl: String = ""
-    var iOSClientId:String = ""
-    var iOSClientSecret: String = ""
-    var iOSCodeVerifier: String = ""
+    
+    var ssoBaseUrl: String? = ""
+    var bushnellBaseUrl: String? = ""
+    var iOSClientId: String? = ""
+    var iOSClientSecret: String? = ""
+    var iOSCodeVerifier: String? = ""
     
     
     //:- For configurations
-    init(ssoBaseUrl: String, iOSClientId: String, iOSClientSecret: String, iOSCodeVerifier: String) {
+    init(ssoBaseUrl: String, iOSClientId: String, iOSClientSecret: String, bushnellBaseUrl: String) {
         
         self.ssoBaseUrl = ssoBaseUrl
+        self.bushnellBaseUrl = bushnellBaseUrl
         self.iOSClientId = iOSClientId
         self.iOSClientSecret = iOSClientSecret
-        self.iOSCodeVerifier = iOSCodeVerifier
     }
     
 }

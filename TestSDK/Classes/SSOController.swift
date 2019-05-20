@@ -31,14 +31,11 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     public func registerNotification() {
-        
-//        NOTIFICATION_CENTER.addObserver(self, selector: #selector(callTokenApi), name: NSNotification.Name(rawValue: SUCCESS_DEEPLINK_CODE), object: nil)
-//        NOTIFICATION_CENTER.addObserver(self, selector: #selector(failWebResp), name: NSNotification.Name(rawValue: FAIL_DEEPLINK_CODE), object: nil)
-//        NOTIFICATION_CENTER.addObserver(self, selector: #selector(reloadSafariTab), name: NSNotification.Name(rawValue: NO_DEEPLINK_CODE), object: nil)
     }
  
-    public func configurationServer() {
-        let config = Configuration
+    public func setupConfiguration(ssoBaseUrl: String, iOSClientId: String, iOSClientSecret: String, bushnellBaseUrl: String) {
+        
+        CurrentUser.sharedInstance.loadSsoConfigurations(ssoBaseUrl, iOSClientId, iOSClientSecret, bushnellBaseUrl)
     }
     
     // MARK: - Notification Handler Method
@@ -48,7 +45,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         self.mtarget!.dismiss(animated: true, completion: nil)
     }
     
-    @objc func reloadSafariTab() {
+    public func reloadSafariTab() {
         
         self.mtarget!.dismiss(animated: true, completion: nil)
         Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(openSafariTab), userInfo: nil, repeats: false)
@@ -92,7 +89,14 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         
         //:- authentication url path e.g (client_url + client_id + remaining url path + encrypted code_verifier + code_challenge_method)
         
-        let urlPath = "\(SSO_BASE_URL)\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(self.getEncryptedVerifierCode(IOS_CODE_VERIFIER))\(WEB_AUTH_BASE_URL_THIRD)"
+        CurrentUser.sharedInstance.configSSO?.iOSCodeVerifier = generateRandomString(size: 15)
+        
+        let baseURL = CurrentUser.sharedInstance.configSSO?.ssoBaseUrl
+        let iOSClientId = CurrentUser.sharedInstance.configSSO?.iOSClientId
+        let iOSCodeVerifier = CurrentUser.sharedInstance.configSSO?.iOSCodeVerifier
+        
+        
+        let urlPath = "\(baseURL ?? "SSO_BASE_URL")\(WEB_AUTH_BASE_URL)\(iOSClientId ?? "IOS_CLIENT_ID")\(WEB_AUTH_BASE_URL_SECOND)\(self.getEncryptedVerifierCode(iOSCodeVerifier!))\(WEB_AUTH_BASE_URL_THIRD)"
         
         //let code_verifier = "k2oYXKqiZrucvpgengXLeM1zKwsygOuURBK7b4-PB68"
         //let urlPath = "\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(code_verifier)\(WEB_AUTH_BASE_URL_THIRD)"
@@ -107,6 +111,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         //safariVC.delegate = self as SFSafariViewControllerDelegate
         
         target.present(safariVC, animated: true, completion: nil)
+ 
     }
     
     
@@ -132,15 +137,6 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         
     }
     
-    public func updateSSOProfile(viewController: UIViewController) {
-        /*
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: PROFILE_IDENTIFIER) as! ProfileViewController
-        viewController.navigationController?.pushViewController(vc, animated: true)
-        */
-        //let rootViewController = AppDel.window!.rootViewController as! UINavigationController
-        //rootViewController.navigationController?.pushViewController(vc, animated: true)
-    }
     
     public func validateSsoLoginStatus(_ completion: @escaping (Bool) -> Void) {
         
@@ -161,8 +157,8 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     public func checkSessionExpiryStatus(_ completion: @escaping (Bool) -> Void) {
         
         if CurrentUser.sharedInstance.isLoggedIn! {
-            CurrentUser.sharedInstance.checkSessionExpiry("") {isExpire in
-                print("Is token expire = ",isExpire)
+            CurrentUser.sharedInstance.checkSessionExpiry { (isExpire) in
+                print("Is token expire : ",isExpire)
                 completion(isExpire)
             }
         }
@@ -198,7 +194,9 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
 
         //:- Pass the parameter "code" and "code verifier"
 
-        BushnellAPI.sharedInstance.tokenApi(responseCode: code as String, codeVerifier: IOS_CODE_VERIFIER as String) { (success, response) -> Void in
+        let iOSCodeVerifier = CurrentUser.sharedInstance.configSSO?.iOSCodeVerifier
+        
+        BushnellAPI.sharedInstance.tokenApi(responseCode: code as String, codeVerifier: iOSCodeVerifier!) { (success, response) -> Void in
             if (success) {
 
                 print(response as Any)
