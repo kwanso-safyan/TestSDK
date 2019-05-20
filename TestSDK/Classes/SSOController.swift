@@ -37,6 +37,9 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
 //        NOTIFICATION_CENTER.addObserver(self, selector: #selector(reloadSafariTab), name: NSNotification.Name(rawValue: NO_DEEPLINK_CODE), object: nil)
     }
  
+    public func configurationServer() {
+        let config = Configuration
+    }
     
     // MARK: - Notification Handler Method
     
