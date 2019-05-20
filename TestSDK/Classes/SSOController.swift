@@ -24,6 +24,8 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     
     var mtarget: UIViewController?
     
+    var codeVerifier: String?
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -83,9 +85,11 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         
         self.mtarget = target
         
+        //self.codeVerifier = self.generateRandomString(size: 15)
+        
         //:- authentication url path e.g (client_url + client_id + remaining url path + encrypted code_verifier + code_challenge_method)
         
-        let urlPath = "\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(self.getEncryptedVerifierCode(IOS_CODE_VERIFIER))\(WEB_AUTH_BASE_URL_THIRD)"
+        let urlPath = "\(SSO_BASE_URL)\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(self.getEncryptedVerifierCode(IOS_CODE_VERIFIER))\(WEB_AUTH_BASE_URL_THIRD)"
         
         //let code_verifier = "k2oYXKqiZrucvpgengXLeM1zKwsygOuURBK7b4-PB68"
         //let urlPath = "\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(code_verifier)\(WEB_AUTH_BASE_URL_THIRD)"
@@ -107,18 +111,22 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         
         self.mtarget = target
         
-        //:- Logout url path e.g (client_url + session/end)
+        if CurrentUser.sharedInstance.isLoggedIn! {
+            
+            //:- Logout url path e.g (client_url + session/end)
+            
+            let urlPath = "\(SSO_BASE_URL)\("session/end?")\("post_logout_redirect_uri=")\(IOS_REDIRECT_URL)\("logout=true")\("&id_token_hint=")\((CurrentUser.sharedInstance.tokenObject?.id_token)!)"
+            
+            print(urlPath)
+            guard let url = URL(string: urlPath) else { return }
+            
+            let safariVC = SFSafariViewController(url: url)
+            safariVC.dismissButtonStyle = .cancel
+            safariVC.modalPresentationStyle = .overFullScreen
+            safariVC.delegate = target as? SFSafariViewControllerDelegate
+            target.present(safariVC, animated: true, completion: nil)
+        }
         
-        let urlPath = "\(SSO_BASE_URL)\("session/end?")\("post_logout_redirect_uri=")\(IOS_REDIRECT_URL)\("logout=true")\("&id_token_hint=")\((CurrentUser.sharedInstance.tokenObject?.id_token)!)"
-        
-        print(urlPath)
-        guard let url = URL(string: urlPath) else { return }
-        
-        let safariVC = SFSafariViewController(url: url)
-        safariVC.dismissButtonStyle = .cancel
-        safariVC.modalPresentationStyle = .overFullScreen
-        safariVC.delegate = target as? SFSafariViewControllerDelegate
-        target.present(safariVC, animated: true, completion: nil)
     }
     
     public func updateSSOProfile(viewController: UIViewController) {
@@ -131,7 +139,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         //rootViewController.navigationController?.pushViewController(vc, animated: true)
     }
     
-    public func validateSsoLoginStatus(_ code: String, completion: @escaping (Bool) -> Void) {
+    public func validateSsoLoginStatus(_ completion: @escaping (Bool) -> Void) {
         
         CurrentUser.sharedInstance.load()
 
@@ -147,12 +155,12 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         }
     }
     
-    public func checkSessionExpiryStatus() {
+    public func checkSessionExpiryStatus(_ completion: @escaping (Bool) -> Void) {
         
         if CurrentUser.sharedInstance.isLoggedIn! {
             CurrentUser.sharedInstance.checkSessionExpiry("") {isExpire in
-                print("---- --- ",isExpire)
-                //UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: SESSION_EXPIRE_MSG, btnTitle: OK, target: (AppDel.window?.rootViewController)!)
+                print("Is token expire = ",isExpire)
+                completion(isExpire)
             }
         }
     }
@@ -198,9 +206,6 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
                 
             }
             else {
-                if response != nil {
-                    //UtilityHelper.showAlertWithM`essageAndTarget(ALERT_TITLE, message: response![ERROR_DESCRIPTION] as? String, btnTitle: OK, target: self)
-                }
 
                 MBProgressHUD.dismissGlobalHUD()
                 completion(false)
@@ -221,15 +226,38 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
                 completion(true)
             }
             else {
-                if response != nil {
-                    //UtilityHelper.showAlertWithMessageAndTarget(ALERT_TITLE, message: response![ERROR_DESCRIPTION] as? String, btnTitle: OK, target: self)
-                }
-                
                 completion(false)
             }
         }
     }
     
+    
+    public func introspectionToken(_ completion: @escaping (AnyObject) -> Void) {
+        
+        if CurrentUser.sharedInstance.isLoggedIn! {
+            
+            //:- Call refresh token API
+            BushnellAPI.sharedInstance.introspectionTokenApi(accessToken: CurrentUser.sharedInstance.tokenObject!.access_token) { (success, response) -> Void in
+                
+                if (success) {
+                    completion(response as AnyObject)
+                }else {
+                    completion(false as AnyObject)
+                }
+            }
+        }
+    }
+    
+    public func updateUserInfo(userObj: AnyObject, completion: @escaping (Bool, AnyObject) -> Void) {
+        
+        if CurrentUser.sharedInstance.isLoggedIn! {
+            
+            //:- Call update user info API
+            BushnellAPI.sharedInstance.updateProfileApi(updateObj: userObj) { (success, response) -> Void in
+                completion(success,  response as AnyObject)
+            }
+        }
+    }
     
  
     // MARK: - SHA Encryption
@@ -249,6 +277,15 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
             .trimmingCharacters(in: .whitespaces)
         
         return encryptedVerifier
+    }
+    
+    func generateRandomString(size: UInt) -> String {
+        let prefixSize = Int(min(size, 43))
+        let uuidString = UUID().uuidString.replacingOccurrences(of: "-", with: "")
+        return String(Data(uuidString.utf8)
+            .base64EncodedString()
+            .replacingOccurrences(of: "=", with: "")
+            .prefix(prefixSize))
     }
     
     public func clearSSOSession() {
