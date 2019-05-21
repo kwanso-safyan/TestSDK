@@ -14,15 +14,17 @@ class Configuration: NSObject {
     var iOSClientId: String? = ""
     var iOSClientSecret: String? = ""
     var iOSCodeVerifier: String? = ""
+    var iOSRedirectUrl: String = ""
     
     
     //:- For configurations
-    init(ssoBaseUrl: String, iOSClientId: String, iOSClientSecret: String, bushnellBaseUrl: String) {
+    init(ssoBaseUrl: String, iOSClientId: String, iOSClientSecret: String, bushnellBaseUrl: String, iOSRedirectUrl: String) {
         
         self.ssoBaseUrl = ssoBaseUrl
         self.bushnellBaseUrl = bushnellBaseUrl
         self.iOSClientId = iOSClientId
         self.iOSClientSecret = iOSClientSecret
+        self.iOSRedirectUrl = iOSRedirectUrl
     }
     
 }

@@ -34,8 +34,10 @@ class BushnellAPI {
     }
     
     func authorizationCustomHeader() -> (String)? {
+        let iOSClientId = CurrentUser.sharedInstance.configSSO?.iOSClientId
+        let iOSClientSecret = CurrentUser.sharedInstance.configSSO?.iOSClientSecret
         
-        guard let data = "\(IOS_CLIENT_ID):\(IOS_CLIENT_SECRET)".data(using: .utf8) else { return nil }
+        guard let data = "\(iOSClientId ?? "IOS_CLIENT_ID"):\(iOSClientSecret ?? "IOS_CLIENT_SECRET")".data(using: .utf8) else { return nil }
         let credential = data.base64EncodedString(options: [])
         
         return "Basic \(credential)"
@@ -49,7 +51,10 @@ class BushnellAPI {
         handler: @escaping (_ success: Bool, _ response: AnyObject?) -> Void
         )
     {
-        let requestString: NSString = "\(SSO_BASE_URL)\(TOKEN_API_PATH)" as NSString
+        let baseURL = CurrentUser.sharedInstance.configSSO?.ssoBaseUrl
+        let iOSRedirectUrl = CurrentUser.sharedInstance.configSSO?.iOSRedirectUrl
+        
+        let requestString: NSString = "\(baseURL ?? "SSO_BASE_URL")\(TOKEN_API_PATH)" as NSString
         
         let url: NSURL = NSURL(string: requestString as String)!
         
@@ -59,7 +64,7 @@ class BushnellAPI {
         request.setValue(self.authorizationCustomHeader(), forHTTPHeaderField: Strings.AUTHORIZATION)
         
         
-        let data : Data = "code=\(responseCode)&redirect_uri=\(IOS_REDIRECT_URL)&grant_type=authorization_code&code_verifier=\(codeVerifier)".data(using: .utf8)!
+        let data : Data = "code=\(responseCode)&redirect_uri=\(iOSRedirectUrl ?? "IOS_REDIRECT_URL")&grant_type=authorization_code&code_verifier=\(codeVerifier)".data(using: .utf8)!
         
         request.httpBody = data
         
@@ -116,7 +121,9 @@ class BushnellAPI {
         handler: @escaping (_ success: Bool, _ response: AnyObject?) -> Void
         )
     {
-        let requestString: NSString = "\(SSO_BASE_URL)\(TOKEN_API_PATH)" as NSString
+        let baseURL = CurrentUser.sharedInstance.configSSO?.ssoBaseUrl
+        
+        let requestString: NSString = "\(baseURL ?? "SSO_BASE_URL")\(TOKEN_API_PATH)" as NSString
         
         let url: NSURL = NSURL(string: requestString as String)!
         
@@ -179,7 +186,9 @@ class BushnellAPI {
         handler: @escaping (_ success: Bool, _ response: AnyObject?) -> Void
         )
     {
-        let requestString: NSString = "\(SSO_BASE_URL)\(TOKEN_INTROSPECTION_API_PATH)" as NSString
+        let baseURL = CurrentUser.sharedInstance.configSSO?.ssoBaseUrl
+        
+        let requestString: NSString = "\(baseURL ?? "SSO_BASE_URL")\(TOKEN_INTROSPECTION_API_PATH)" as NSString
         
         let url: NSURL = NSURL(string: requestString as String)!
         
@@ -236,8 +245,9 @@ class BushnellAPI {
         handler: @escaping (_ success: Bool, _ response: AnyObject?) -> Void
         )
     {
+        let baseURL = CurrentUser.sharedInstance.configSSO?.ssoBaseUrl
         
-        let requestString: NSString = "\(SSO_BASE_URL)\(ME_API)" as NSString
+        let requestString: NSString = "\(baseURL ?? "SSO_BASE_URL")\(ME_API)" as NSString
         let url: NSURL = NSURL(string: requestString as String)!
         
         var request = URLRequest(url: url as URL)
@@ -279,7 +289,9 @@ class BushnellAPI {
         handler: @escaping (_ success: Bool, _ response: AnyObject?) -> Void
         )
     {
-        let requestString: NSString = "\(BUSNELL_BASE_URL)\(UPDATE_PROFILE)" as NSString
+        let bushnellBaseUrl = CurrentUser.sharedInstance.configSSO?.bushnellBaseUrl
+        
+        let requestString: NSString = "\(bushnellBaseUrl ?? "BUSNELL_BASE_URL")\(UPDATE_PROFILE)" as NSString
         let url: NSURL = NSURL(string: requestString as String)!
         
         var request = URLRequest(url: url as URL)

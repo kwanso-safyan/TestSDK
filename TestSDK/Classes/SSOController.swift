@@ -33,9 +33,9 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     public func registerNotification() {
     }
  
-    public func setupConfiguration(ssoBaseUrl: String, iOSClientId: String, iOSClientSecret: String, bushnellBaseUrl: String) {
+    public func setupConfiguration(ssoBaseUrl: String, iOSClientId: String, iOSClientSecret: String, bushnellBaseUrl: String, iOSRedirectUrl: String) {
         
-        CurrentUser.sharedInstance.loadSsoConfigurations(ssoBaseUrl, iOSClientId, iOSClientSecret, bushnellBaseUrl)
+        CurrentUser.sharedInstance.loadSsoConfigurations(ssoBaseUrl, iOSClientId, iOSClientSecret, bushnellBaseUrl, iOSRedirectUrl)
     }
     
     // MARK: - Notification Handler Method
@@ -96,7 +96,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         let iOSCodeVerifier = CurrentUser.sharedInstance.configSSO?.iOSCodeVerifier
         
         
-        let urlPath = "\(baseURL ?? "SSO_BASE_URL")\(WEB_AUTH_BASE_URL)\(iOSClientId ?? "IOS_CLIENT_ID")\(WEB_AUTH_BASE_URL_SECOND)\(self.getEncryptedVerifierCode(iOSCodeVerifier!))\(WEB_AUTH_BASE_URL_THIRD)"
+        let urlPath = "\(baseURL ?? "SSO_BASE_URL")\(WEB_AUTH_BASE_URL_ONE)\(iOSClientId ?? "IOS_CLIENT_ID")\(WEB_AUTH_BASE_URL_SECOND)\(self.getEncryptedVerifierCode(iOSCodeVerifier!))\(WEB_AUTH_BASE_URL_THIRD)"
         
         //let code_verifier = "k2oYXKqiZrucvpgengXLeM1zKwsygOuURBK7b4-PB68"
         //let urlPath = "\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(code_verifier)\(WEB_AUTH_BASE_URL_THIRD)"
@@ -108,8 +108,6 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
         let safariVC = SFSafariViewController(url: url)
         safariVC.dismissButtonStyle = .cancel
         safariVC.modalPresentationStyle = .overFullScreen
-        //safariVC.delegate = self as SFSafariViewControllerDelegate
-        
         target.present(safariVC, animated: true, completion: nil)
  
     }
@@ -123,7 +121,12 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
             
             //:- Logout url path e.g (client_url + session/end)
             
-            let urlPath = "\(SSO_BASE_URL)\("session/end?")\("post_logout_redirect_uri=")\(IOS_REDIRECT_URL)\("logout=true")\("&id_token_hint=")\((CurrentUser.sharedInstance.tokenObject?.id_token)!)"
+            let baseURL = CurrentUser.sharedInstance.configSSO?.ssoBaseUrl
+            let iOSRedirectUrl = CurrentUser.sharedInstance.configSSO?.iOSRedirectUrl
+            
+            let urlPath = "\(baseURL ?? "SSO_BASE_URL")\("session/end?")\("post_logout_redirect_uri=")\(iOSRedirectUrl ?? "IOS_LOGOUT_REDIRECT_URL")\("?logout=true")\(ID_TOKEN_HINT)\((CurrentUser.sharedInstance.tokenObject?.id_token)!)"
+            
+            //let urlPath = "\(baseURL ?? "SSO_BASE_URL")\("session/end?")"
             
             print(urlPath)
             guard let url = URL(string: urlPath) else { return }
