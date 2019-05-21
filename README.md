@@ -4,7 +4,7 @@ Simple and lightweight library to athunticate user from sso dedicated API.
 
 # Installation
 
-1. Make sure you have access to repo <https://github.com/Enlyten/HKLeech> 
+1. Make sure you have access to repo <https://github.com/kwanso-safyan/TestSDK> 
 2. Add the following line to your Podfile:
 
 ```ruby
@@ -71,41 +71,37 @@ Add this method to handle the success athuntication code.
 ```swift
 
 func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-print(url.absoluteString)
-print(url.query as Any)
 
+    if let host = url.scheme {
+        if host.contains("com.ios.bushnellsso") {
+            if let response = url.query {
+                if response.contains("code=") {
 
-if let host = url.scheme {
-if host.contains("com.ios.bushnellsso") {
-if let response = url.query {
-if response.contains("code=") {
+                    let responseArr = url.query?.components(separatedBy: "code=")
+                    ssoVC.callSSOTokenApiWithCodeCompletion(code: (responseArr?[1])!, target: (AppDel.window?.rootViewController)!) { status in
+                        if status! {
+                            print("Login Successfully")
+                        } else {
+                            print("Failed")
+                        }
+                    }
 
-let responseArr = url.query?.components(separatedBy: "code=")
+                    return true
+                } else if response.contains("error=") {
+                    // dismiss the auth tab in error case
 
-ssoVC.callSSOTokenApiWithCodeCompletion(code: (responseArr?[1])!, target: (AppDel.window?.rootViewController)!) { status in
-if status! {
-print("Login Successfully")
-} else {
-print("Failed")
-}
-}
-
-return true
-} else if response.contains("error=") {
-// show error alert
-
-ssoVC.dismissAuthTab(target: (AppDel.window?.rootViewController)!)
-return false
-} else {
-return false
-}
-} else if url.query == nil {
-ssoVC.reloadSafariTab(target: (AppDel.window?.rootViewController)!)
-return true
-}
-}
-}
-return false
+                    ssoVC.dismissAuthTab(target: (AppDel.window?.rootViewController)!)
+                    return false
+                } else {
+                    return false
+                }
+            } else if url.query == nil {
+                ssoVC.reloadSafariTab(target: (AppDel.window?.rootViewController)!)
+                return true
+            }
+        }
+    }
+    return false
 }
 
 ```
