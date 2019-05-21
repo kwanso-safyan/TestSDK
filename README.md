@@ -51,7 +51,7 @@ iOSRedirectUrl: "com.ios.bushnellsso://")
 
 ```
 
-## Check for sso login session
+## Check for sso login session in did finish launching (AppDelegate)
 
 Call this method in did finish launching for checking user is logged in or not for selecting initial navigation.
 
@@ -59,6 +59,9 @@ Call this method in did finish launching for checking user is logged in or not f
 
 ```swift
 ssoSDK.validateSsoLoginStatus { login in
+    if login {
+        //:- load home screen
+    }
 }
 ```
 
@@ -106,8 +109,6 @@ func application(_ app: UIApplication, open url: URL, options: [UIApplication.Op
 
 ```
 
-Call when app did finish launching (AppDelegate)
-
 
 ## Check session expiry
 
@@ -120,6 +121,33 @@ ssoSDK.checkSessionExpiryStatus { (isExpire) in
     if isExpire {
     //:- You need to navigate to the login screen.
     }
+}
+```
+
+## Introspection Access Token
+
+Use these lines of code in case of introspection access token .
+
+**Swift:**
+
+```swift
+ssoVC.introspectionAccessToken { (response) in
+    print(response)
+}
+```
+
+## Check Refresh token
+
+Use these lines of code in case of invalidate refresh token .
+
+**Swift:**
+
+```swift
+ssoVC.checkRefreshToken(success: { (success, response) in
+    print(success)
+}) { (errorTag, message) in
+    print(errorTag, message)
+    //:- Logout SSO session
 }
 ```
 
@@ -136,7 +164,7 @@ let userObject = [
 ]
 
 ssoSDK.updateUserInfo(userObj: userObject as AnyObject) { (status, response) in
-print(status, " -------- ", response)
+    print(status, " -------- ", response)
 }
 
 ```
