@@ -43,11 +43,13 @@ Calling this method right after app finished launching is crucial to get the lon
 
 ```swift
 
-ssoSDK.setupConfiguration(ssoBaseUrl: "https://oidc-provider-bushnell-stage.herokuapp.com/",
-iOSClientId: "3F0PNxW8mFcLesCUUdnW",
-iOSClientSecret: "4gLTweFk8Rlljj0pMze1CLNFyzHg7v",
-bushnellBaseUrl: "https://bushnell-resource-server-stage.herokuapp.com/",
-iOSRedirectUrl: "com.ios.bushnellsso://")
+ssoVC.setupConfiguration(
+    ssoBaseUrl: "https://oidc-provider-bushnell-stage.herokuapp.com/",
+    iOSClientId: "3F0PNxW8mFcLesCUUdnW",
+    iOSClientSecret: "4gLTweFk8Rlljj0pMze1CLNFyzHg7v",
+    bushnellBaseUrl: "https://bushnell-resource-server-stage.herokuapp.com/",
+    iOSRedirectUrl: "com.ios.bushnellsso://"
+)
 
 ```
 
