@@ -40,14 +40,15 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     
     // MARK: - Notification Handler Method
     
-    public func failWebResp() {
+    public func dismissAuthTab(target: UIViewController) {
         
-        self.mtarget!.dismiss(animated: true, completion: nil)
+        target.dismiss(animated: true, completion: nil)
     }
     
-    public func reloadSafariTab() {
+    public func reloadSafariTab(target: UIViewController) {
         
-        self.mtarget!.dismiss(animated: true, completion: nil)
+        self.mtarget = target
+        target.dismiss(animated: true, completion: nil)
         Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(openSafariTab), userInfo: nil, repeats: false)
     }
     
@@ -57,9 +58,12 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
          //:- Open Safari Tab from call back URL through Brodcast Notification
          **********/
         
+        self.ssoAthuntication(target: self.mtarget!)
+        
         //launchSafariTabWithPath(urlPath: "\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(self.getEncryptedVerifierCode(IOS_CODE_VERIFIER))\(WEB_AUTH_BASE_URL_THIRD)")
         
         //        launchSafariTabWithCustomPath(urlPath: "\(WEB_AUTH_BASE_URL)\(IOS_CLIENT_ID)\(WEB_AUTH_BASE_URL_SECOND)\(self.getEncryptedVerifierCode(IOS_CODE_VERIFIER))\(WEB_AUTH_BASE_URL_THIRD)", viewController: self)
+        
     }
     
     public func setBackgroundGradient(view: AnyObject) {
@@ -168,6 +172,25 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     
+    public func checkRefreshToken (success successBlock: @escaping (_ success: Bool, _ response: AnyObject) -> Void, faliure: @escaping (_ errorTag: String, _ response: String) -> Void) {
+        
+        if CurrentUser.sharedInstance.isLoggedIn! {
+            if (CurrentUser.sharedInstance.tokenObject?.refresh_token.count)! > 0 {
+                //:- Call refresh token API
+                BushnellAPI.sharedInstance.refreshTokenApi(refreshToken: (CurrentUser.sharedInstance.tokenObject?.refresh_token)!) { (success, response) -> Void in
+                    if (success) {
+                        successBlock(true, response!)
+                    }else {
+                        faliure("INVALID_TOKEN", "Refresh token expires.")
+                    }
+                }
+                
+            } else {
+                faliure("INVALID_CONSENT", "You didn't provide consent to keep logged in.")
+            }
+        }
+    }
+    
     // MARK: - Auth Api Method
     
     //:- Call APi for access_token fetching
@@ -236,7 +259,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     
-    public func introspectionToken(_ completion: @escaping (AnyObject) -> Void) {
+    public func introspectionAccessToken(_ completion: @escaping (AnyObject) -> Void) {
         
         if CurrentUser.sharedInstance.isLoggedIn! {
             
