@@ -1,0 +1,6 @@
+framework module Pods_Bushnell_ios_SDK {
+  umbrella header "Pods-Bushnell-ios-SDK-umbrella.h"
+
+  export *
+  module * { export * }
+}

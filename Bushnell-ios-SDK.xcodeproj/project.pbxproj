@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		382DD1818CB3E4757B5DFDB9 /* Pods_Bushnell_ios_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61BB09880CEF02301821AEA1 /* Pods_Bushnell_ios_SDK.framework */; };
 		B80D3B9F2282A987008A876A /* TestSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = B80D3B912282A987008A876A /* TestSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B80D3BB12282C82A008A876A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80D3BAF2282C82A008A876A /* LoginViewController.swift */; };
 		B80D3BB22282C82A008A876A /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B80D3BB02282C82A008A876A /* LoginViewController.xib */; };
@@ -27,17 +28,16 @@
 		B828F4D322897A6A0068AE24 /* Token+Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B828F4D222897A6A0068AE24 /* Token+Serializable.swift */; };
 		B828F4D522897A6F0068AE24 /* User+Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B828F4D422897A6E0068AE24 /* User+Serializable.swift */; };
 		B86B112E2292ABC100E35350 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B86B112D2292ABC100E35350 /* Configuration.swift */; };
-		EF10DD66EC558F6734D0B691 /* Pods_TestSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B6D206D461209A28481FC39 /* Pods_TestSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		01A248C12B2B974853F4BECF /* Pods-TestSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestSDK/Pods-TestSDK.release.xcconfig"; sourceTree = "<group>"; };
-		2EDE5AEEF8464305D1CB6DA3 /* Pods-TestSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestSDK/Pods-TestSDK.debug.xcconfig"; sourceTree = "<group>"; };
-		4B6D206D461209A28481FC39 /* Pods_TestSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B80D3B8E2282A987008A876A /* TestSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TestSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		61BB09880CEF02301821AEA1 /* Pods_Bushnell_ios_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bushnell_ios_SDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C8C27E678BD78D696BD9BA5 /* Pods-Bushnell-ios-SDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bushnell-ios-SDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bushnell-ios-SDK/Pods-Bushnell-ios-SDK.release.xcconfig"; sourceTree = "<group>"; };
+		95EAB84349786061CAA6502D /* Pods-Bushnell-ios-SDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bushnell-ios-SDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bushnell-ios-SDK/Pods-Bushnell-ios-SDK.debug.xcconfig"; sourceTree = "<group>"; };
+		B80D3B8E2282A987008A876A /* Bushnell_ios_SDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Bushnell_ios_SDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B80D3B912282A987008A876A /* TestSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestSDK.h; sourceTree = "<group>"; };
 		B80D3B922282A987008A876A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B80D3B9C2282A987008A876A /* TestSDKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSDKTests.swift; sourceTree = "<group>"; };
+		B80D3B9C2282A987008A876A /* Bushnell-ios-SDKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bushnell-ios-SDKTests.swift"; sourceTree = "<group>"; };
 		B80D3B9E2282A987008A876A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B80D3BAF2282C82A008A876A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B80D3BB02282C82A008A876A /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -66,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF10DD66EC558F6734D0B691 /* Pods_TestSDK.framework in Frameworks */,
+				382DD1818CB3E4757B5DFDB9 /* Pods_Bushnell_ios_SDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,40 +77,31 @@
 			isa = PBXGroup;
 			children = (
 				B80D3CDF22855F10008A876A /* CommonCryptoModule.framework */,
-				4B6D206D461209A28481FC39 /* Pods_TestSDK.framework */,
+				61BB09880CEF02301821AEA1 /* Pods_Bushnell_ios_SDK.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		59FA7397991CEE549A5E260F /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2EDE5AEEF8464305D1CB6DA3 /* Pods-TestSDK.debug.xcconfig */,
-				01A248C12B2B974853F4BECF /* Pods-TestSDK.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		B80D3B842282A986008A876A = {
 			isa = PBXGroup;
 			children = (
-				B80D3B902282A987008A876A /* TestSDK */,
-				B80D3B9B2282A987008A876A /* TestSDKTests */,
+				B80D3B902282A987008A876A /* Bushnell-ios-SDK */,
+				B80D3B9B2282A987008A876A /* Bushnell-ios-SDKTests */,
 				B80D3B8F2282A987008A876A /* Products */,
 				0F7C7F59F056BD69F2B16084 /* Frameworks */,
-				59FA7397991CEE549A5E260F /* Pods */,
+				FCAA72FEEA67E35AD9DF2D10 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
 		B80D3B8F2282A987008A876A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B80D3B8E2282A987008A876A /* TestSDK.framework */,
+				B80D3B8E2282A987008A876A /* Bushnell_ios_SDK.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B80D3B902282A987008A876A /* TestSDK */ = {
+		B80D3B902282A987008A876A /* Bushnell-ios-SDK */ = {
 			isa = PBXGroup;
 			children = (
 				B828F4DA228995650068AE24 /* Extension */,
@@ -123,16 +114,16 @@
 				B80D3BBB2282D390008A876A /* Assets.xcassets */,
 				B80D3B922282A987008A876A /* Info.plist */,
 			);
-			path = TestSDK;
+			path = "Bushnell-ios-SDK";
 			sourceTree = "<group>";
 		};
-		B80D3B9B2282A987008A876A /* TestSDKTests */ = {
+		B80D3B9B2282A987008A876A /* Bushnell-ios-SDKTests */ = {
 			isa = PBXGroup;
 			children = (
-				B80D3B9C2282A987008A876A /* TestSDKTests.swift */,
+				B80D3B9C2282A987008A876A /* Bushnell-ios-SDKTests.swift */,
 				B80D3B9E2282A987008A876A /* Info.plist */,
 			);
-			path = TestSDKTests;
+			path = "Bushnell-ios-SDKTests";
 			sourceTree = "<group>";
 		};
 		B828F4C8228971930068AE24 /* Classes */ = {
@@ -171,6 +162,15 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		FCAA72FEEA67E35AD9DF2D10 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				95EAB84349786061CAA6502D /* Pods-Bushnell-ios-SDK.debug.xcconfig */,
+				6C8C27E678BD78D696BD9BA5 /* Pods-Bushnell-ios-SDK.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -185,11 +185,11 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		B80D3B8D2282A987008A876A /* TestSDK */ = {
+		B80D3B8D2282A987008A876A /* Bushnell-ios-SDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B80D3BA22282A987008A876A /* Build configuration list for PBXNativeTarget "TestSDK" */;
+			buildConfigurationList = B80D3BA22282A987008A876A /* Build configuration list for PBXNativeTarget "Bushnell-ios-SDK" */;
 			buildPhases = (
-				DD8DE68C2DF938D1340C888E /* [CP] Check Pods Manifest.lock */,
+				1D1321A9563F04F8A080C34C /* [CP] Check Pods Manifest.lock */,
 				B80D3B892282A987008A876A /* Headers */,
 				B80D3B8A2282A987008A876A /* Sources */,
 				B80D3B8B2282A987008A876A /* Frameworks */,
@@ -200,9 +200,9 @@
 			);
 			dependencies = (
 			);
-			name = TestSDK;
+			name = "Bushnell-ios-SDK";
 			productName = TestSDK;
-			productReference = B80D3B8E2282A987008A876A /* TestSDK.framework */;
+			productReference = B80D3B8E2282A987008A876A /* Bushnell_ios_SDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -221,7 +221,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B80D3B882282A986008A876A /* Build configuration list for PBXProject "TestSDK" */;
+			buildConfigurationList = B80D3B882282A986008A876A /* Build configuration list for PBXProject "Bushnell-ios-SDK" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -233,7 +233,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B80D3B8D2282A987008A876A /* TestSDK */,
+				B80D3B8D2282A987008A876A /* Bushnell-ios-SDK */,
 			);
 		};
 /* End PBXProject section */
@@ -252,6 +252,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1D1321A9563F04F8A080C34C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Bushnell-ios-SDK-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B80D3C7722842C10008A876A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -264,24 +282,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\necho \"Building assets bundle.\"\n\n# Bundle name (without the \".bundle\" part). I separated this because I have different app targets, each one with a different bundle.\nBUNDLE_NAME='MyBundle'\nCURRENT_PATH=`pwd`\n\n# This should generate the full path to your bundle. Might need to be adapted if the bundle\n# directory you created was in another directory.\nBUNDLE_PATH=\"$CURRENT_PATH/$BUNDLE_NAME.bundle\"\n\n# Check if the bundle exists, and removes it completely if it does.\nif [ -d \"$BUNDLE_PATH\" ]; then\nrm -rf \"$BUNDLE_PATH\"\nfi\n\n# Re-creates the same bundle (I know this is weird. But at least I am SURE the bundle will\n# be clean for the next steps)\nmkdir \"$BUNDLE_PATH\"\n\n# Copy all .jpg files to the bundle\nfind ./ -name *.jpg -type f -print0 | xargs -0 -J% cp % \"$BUNDLE_PATH\"\n\n# Copy all .png files to the bundle\nfind ./ -name *.png -type f -print0 | xargs -0 -J% cp % \"$BUNDLE_PATH\"\n\n# Copy all .xib files to the bundle.\nfind ./ -name *.xib -type f -print0 | xargs -0 -J% cp % \"$BUNDLE_PATH\"\n\n# Copy all .storyboard files to the bundle.\nfind ./ -name *.storyboard -type f -print0 | xargs -0 -J% cp % \"$BUNDLE_PATH\"\n\n# This is the golden thing. iOS code will not load .xib or storyboard files, you need to compile\n# them for that. That's what these loop do: they get each .xib / .storyboard file and compiles them using Xcode's\n# ibtool CLI.\n\nfor f in \"$BUNDLE_PATH/\"*.xib ;\ndo\n# $f now holds the complete path and filename a .xib file\nXIB_NAME=\"$f\";\n\n# Replace the \".xib\" at the end of $f by \".nib\"\nNIB_NAME=\"${f%.xib}.nib\";\n\n# Execute the ibtool to compile the xib file\nibtool --compile \"$NIB_NAME\" \"$XIB_NAME\"\n\n# Since the xib file is now useless for us, remove it.\nrm -f \"$f\"\ndone\n\nfor f in \"$BUNDLE_PATH/\"*.storyboard ;\ndo\n# $f now holds the complete path and filename a .storyboard file\nSTORYBOARD_NAME=\"$f\";\n\n# Replace the \".storyboard\" at the end of $f by \".storyboardc\" (could've just added the final \"c\", but I like\n# to keep both loops equal)\nCOMPILED_NAME=\"${f%.storyboard}.storyboardc\";\n\n# Execute the ibtool to compile the storyboard file\nibtool --compile \"$COMPILED_NAME\" \"$STORYBOARD_NAME\"\n\n# Since the .storyboard file is now useless for us, remove it.\nrm -f \"$f\"\ndone\n";
-		};
-		DD8DE68C2DF938D1340C888E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TestSDK-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -436,7 +436,7 @@
 		};
 		B80D3BA32282A987008A876A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2EDE5AEEF8464305D1CB6DA3 /* Pods-TestSDK.debug.xcconfig */;
+			baseConfigurationReference = 95EAB84349786061CAA6502D /* Pods-Bushnell-ios-SDK.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_MODULES = YES;
@@ -446,7 +446,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = TestSDK/Info.plist;
+				INFOPLIST_FILE = "Bushnell-ios-SDK/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -464,7 +464,7 @@
 		};
 		B80D3BA42282A987008A876A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01A248C12B2B974853F4BECF /* Pods-TestSDK.release.xcconfig */;
+			baseConfigurationReference = 6C8C27E678BD78D696BD9BA5 /* Pods-Bushnell-ios-SDK.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_MODULES = YES;
@@ -474,7 +474,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = TestSDK/Info.plist;
+				INFOPLIST_FILE = "Bushnell-ios-SDK/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -492,7 +492,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B80D3B882282A986008A876A /* Build configuration list for PBXProject "TestSDK" */ = {
+		B80D3B882282A986008A876A /* Build configuration list for PBXProject "Bushnell-ios-SDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B80D3BA02282A987008A876A /* Debug */,
@@ -501,7 +501,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B80D3BA22282A987008A876A /* Build configuration list for PBXNativeTarget "TestSDK" */ = {
+		B80D3BA22282A987008A876A /* Build configuration list for PBXNativeTarget "Bushnell-ios-SDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B80D3BA32282A987008A876A /* Debug */,

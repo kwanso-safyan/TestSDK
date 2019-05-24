@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_TestSDKVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_TestSDKVersionString[];
+FOUNDATION_EXPORT double Pods_Bushnell_ios_SDKVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_Bushnell_ios_SDKVersionString[];
 
