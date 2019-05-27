@@ -172,7 +172,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     
-    public func checkRefreshToken (success successBlock: @escaping (_ success: Bool, _ response: AnyObject) -> Void, faliure: @escaping (_ errorTag: String, _ response: String) -> Void) {
+    public func refreshAccessToken (success successBlock: @escaping (_ success: Bool, _ response: AnyObject) -> Void, faliure: @escaping (_ errorTag: String, _ response: String) -> Void) {
         
         if CurrentUser.sharedInstance.isLoggedIn! {
             if (CurrentUser.sharedInstance.tokenObject?.refresh_token.count)! > 0 {
@@ -259,7 +259,7 @@ public class SSOController: UIViewController, SFSafariViewControllerDelegate {
     }
     
     
-    public func introspectionAccessToken(_ completion: @escaping (AnyObject) -> Void) {
+    public func checkAccessToken(_ completion: @escaping (AnyObject) -> Void) {
         
         if CurrentUser.sharedInstance.isLoggedIn! {
             
